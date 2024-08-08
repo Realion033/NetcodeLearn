@@ -4,9 +4,15 @@ using UnityEngine;
 using Unity.Netcode;
 
 public class NetPlayer : NetworkBehaviour {
+    private NetworkVariable<int> randomNum = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private void Update(){
-        
+        Debug.Log(OwnerClientId + " : " + randomNum.Value);
+
         if(!IsOwner) return;
+
+        if(Input.GetKeyDown(KeyCode.T)){
+            randomNum.Value = Random.Range(0, 10);
+        }
 
         Vector3 movedir = new Vector3(0, 0, 0);
 
